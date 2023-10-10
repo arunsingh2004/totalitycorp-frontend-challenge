@@ -195,9 +195,9 @@ const Checkout = ({
         </div>
 
         <h2 className="font-bold text-xl">2.Reviw Your Items</h2>
-        <div className=" bg-pink-100 sideCart  py-10 px-8 ">
+        <div className=" bg-blue-100 sideCart  py-10 px-8 ">
           <h2 className="font-bold text-xl text-center">Your Cart</h2>
-          <span className="absolute top-5 right-2 cursor-pointer text-2xl text-pink-500">
+          <span className="absolute top-5 right-2 cursor-pointer text-2xl text-blue-500">
             <AiFillCloseCircle />
           </span>
           <ol className="list-decimal  font-semibold">
@@ -223,7 +223,7 @@ const Checkout = ({
                             cart[k].variant
                           );
                         }}
-                        className="cursor-pointer text-pink-500"
+                        className="cursor-pointer text-blue-500"
                       />
                       <span className="mx-2"> {cart[k].qty}</span>
                       <AiFillPlusCircle
@@ -237,7 +237,7 @@ const Checkout = ({
                             cart[k].variant
                           );
                         }}
-                        className="cursor-pointer text-pink-500"
+                        className="cursor-pointer text-blue-500"
                       />
                     </div>
                   </div>
@@ -249,13 +249,13 @@ const Checkout = ({
 
           {/* <div className="flex">
             <Link href={"/checkout"}>
-              <button className="flex mr-2 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-300 rounded text-sm">
+              <button className="flex mr-2 text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-300 rounded text-sm">
                 <BsFillBagCheckFill className="m-2" /> CheckOut
               </button>
             </Link>
             <button
               onClick={clearCart}
-              className="flex mr-2 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-300 rounded text-sm"
+              className="flex mr-2 text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-300 rounded text-sm"
             >
               Clear Cart
             </button>
@@ -265,7 +265,7 @@ const Checkout = ({
           <Link>
             <button
               onClick={initiatePayment}
-              className="flex mt-2 text-white bg-pink-500 border-0 py-2 px-12 focus:outline-none hover:bg-pink-300 rounded text-sm"
+              className="flex mt-2 text-white bg-blue-500 border-0 py-2 px-12 focus:outline-none hover:bg-blue-300 rounded text-sm"
             >
               <BsFillBagCheckFill className="m-2" />
               Pay ₹{subTotal}

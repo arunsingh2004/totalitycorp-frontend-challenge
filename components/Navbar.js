@@ -71,7 +71,7 @@ const Navbar = ({
       </div>
       {/* //todo cart */}
 
-      <div className="flex cart items-center absolute right-0 top-4 text-3xl md:text-3xl mx-4 text-pink-500 hover:text-pink-600 cursor-pointer">
+      <div className="flex cart items-center absolute right-0 top-4 text-3xl md:text-3xl mx-4 text-blue-500 hover:text-blue-600 cursor-pointer">
         <a
           onMouseOver={() => {
             setDropdown(true);
@@ -88,20 +88,20 @@ const Navbar = ({
               onMouseLeave={() => {
                 setDropdown(false);
               }}
-              className="absolute text-xl w-40 rounded-md px-5 right-8 bg-pink-100 top-6"
+              className="absolute text-xl w-40 rounded-md px-5 right-8 bg-blue-100 top-6"
             >
               <ul>
                 <Link href={"/myaccount"}>
-                  <li className="py-1 hover:text-pink-600  text-sm ">
+                  <li className="py-1 hover:text-blue-600  text-sm ">
                     MyAccount
                   </li>
                 </Link>
                 <Link href={"/orders"}>
-                  <li className="py-1 hover:text-pink-600  text-sm ">Orders</li>
+                  <li className="py-1 hover:text-blue-600  text-sm ">Orders</li>
                 </Link>
                 <li
                   onClick={logout}
-                  className="py-1 hover:text-pink-600  text-sm "
+                  className="py-1 hover:text-blue-600  text-sm "
                 >
                   Logout
                 </li>
@@ -113,7 +113,7 @@ const Navbar = ({
 
         {!user.value && (
           <Link href={"/login"}>
-            <button className="bg-pink-600 px-2 py-1 rounded-xl text-sm text-white mx-2">
+            <button className="bg-blue-600 px-2 py-1 rounded-xl text-sm text-white mx-2">
               Login
             </button>
           </Link>
@@ -122,13 +122,13 @@ const Navbar = ({
           onClick={toggleCart}
           className="text-xl md:text-2xl"
         />
-        {/* <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-pink-50 rounded-full -top-2 -right-2 ">{Object.keys(cart).qty}</div> */}
+        {/* <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-blue-50 rounded-full -top-2 -right-2 ">{Object.keys(cart).qty}</div> */}
       </div>
 
       {/* side bar */}
       <div
         ref={ref}
-        className={`absolute w-72 bg-pink-100 sideCart overflow-y-scroll top-0 right-0 py-10 px-8 transform transition-transform ${
+        className={`absolute w-72 bg-blue-100 sideCart overflow-y-scroll top-0 right-0 py-10 px-8 transform transition-transform ${
           Object.keys(cart).length !== 0 ? "translate-x-0" : "translate-x-full"
         } `}
       >
@@ -136,7 +136,7 @@ const Navbar = ({
 
         <AiFillCloseCircle
           onClick={toggleCart}
-          className="absolute top-5 right-2 cursor-pointer text-2xl text-pink-500"
+          className="absolute top-5 right-2 cursor-pointer text-2xl text-blue-500"
         />
         <ol className="list-decimal  font-semibold">
           {Object.keys(cart).length == 0 && (
@@ -161,7 +161,7 @@ const Navbar = ({
                           cart[k].variant
                         );
                       }}
-                      className="cursor-pointer text-pink-500"
+                      className="cursor-pointer text-blue-500"
                     />
                     <span className="mx-2"> {cart[k].qty}</span>
                     <AiFillPlusCircle
@@ -175,7 +175,7 @@ const Navbar = ({
                           cart[k].variant
                         );
                       }}
-                      className="cursor-pointer text-pink-500"
+                      className="cursor-pointer text-blue-500"
                     />
                   </div>
                 </div>
@@ -186,13 +186,13 @@ const Navbar = ({
         </ol>
         <div className="flex">
           <Link href={"/checkout"}>
-            <button className="flex mr-2 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-300 rounded text-sm">
+            <button className="flex mr-2 text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-300 rounded text-sm">
               <BsFillBagCheckFill className="m-2" /> CheckOut
             </button>
           </Link>
           <button
             onClick={clearCart}
-            className="flex mr-2 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-300 rounded text-sm"
+            className="flex mr-2 text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-300 rounded text-sm"
           >
             Clear Cart
           </button>
