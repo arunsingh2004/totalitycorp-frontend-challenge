@@ -7,15 +7,20 @@ const Contents = () => {
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-              Wear the Code With
+              OneStop Solution
               <span className="text-blue-600 font-bold -translate-x-8 text-4xl font-serif">
                 {" "}
-                - CoderWear.com
+                - OneStopSolution.com
               </span>
             </h1>
             <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">
-              Wear Whatever You Want. cardigan tote bag tumblr hexagon brooklyn
-              asymmetrical gentrify, subway tile poke farm-to-table.
+              To Automate the On-ground household services to an Online
+              E-commerce software for a One-stop solution to different variety
+              of household related services, with the help of computerized
+              equipment and full-fledged computer software, fulfilling the
+              user’s requirements, so that they not need to search for household
+              services On-ground manually and their valuable time will also be
+              saved.
             </p>
           </div>
           <div className="flex flex-wrap -m-4">

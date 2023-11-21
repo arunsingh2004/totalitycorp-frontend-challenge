@@ -11,7 +11,7 @@ const TShirt = ({ products }) => {
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4 justify-center">
             {Object.keys(products).length === 0 && (
-              <p>Sorry Currently all Tshirt are out stock</p>
+              <p>Sorry Currently We are in process to Updating the Databases</p>
             )}
             {Object.keys(products).map((item) => {
               return (

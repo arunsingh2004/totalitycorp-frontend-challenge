@@ -12,12 +12,15 @@ const Footer = () => {
               href="/"
               className="flex title-font font-medium items-center md:justify-start justify-center text-white"
             >
-              <Image
+              {/* <Image
                 width={100}
                 height={100}
-                src="/logo.png"
+                src=""
                 alt="Loading..."
-              />
+              /> */}
+              <p className="bold text-3xl text-blue-600 m-4">
+                OneStop SOLUTION
+              </p>
             </Link>
             <p className="mt-2 text-sm text-gray-500 px-4">
               Engineered For Excellence
@@ -26,7 +29,7 @@ const Footer = () => {
           <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
             <div className="lg:w-1/4 md:w-1/2 w-full px-4">
               <h2 className="title-font font-medium text-black tracking-widest text-sm mb-3">
-                Shop
+                Home Decor
               </h2>
               <nav className="list-none mb-10">
                 <li>
@@ -34,12 +37,12 @@ const Footer = () => {
                     href="/tshirts"
                     className="text-gray-400 hover:text-black"
                   >
-                    Tshirt
+                    Repairs & Service
                   </Link>
                 </li>
                 <li>
                   <Link href="/mugs" className="text-gray-400 hover:text-black">
-                    Mugs
+                    Daily Needs
                   </Link>
                 </li>
                 <li>
@@ -47,7 +50,7 @@ const Footer = () => {
                     href="/hoodies"
                     className="text-gray-400 hover:text-black"
                   >
-                    Hoodies
+                    Weeding Requisites
                   </Link>
                 </li>
                 <li>
@@ -55,7 +58,7 @@ const Footer = () => {
                     href="/stickers"
                     className="text-gray-400 hover:text-black"
                   >
-                    Stickers
+                    One Stop
                   </Link>
                 </li>
               </nav>
@@ -122,14 +125,15 @@ const Footer = () => {
         <div className="bg-gray-800 bg-opacity-75">
           <div className="container mx-auto py-4 justify-center px-5 flex flex-wrap flex-col sm:flex-row">
             <p className="text-gray-400 text-sm text-center sm:text-left">
-              © 2022 Codeswear —
+              © 2022 OneStopSolution —
               <a
                 href="https://github.com/arunsingh2004/UnstopSolution"
                 rel="noopener noreferrer"
                 className="text-black ml-1"
                 target="_blank"
               >
-                Made With ❤ By Arun Singh
+                Designed and Maintained ❤ By Arun Singh, Ayush Shaw,
+                HarshVardhan, Abhinandhan raj
               </a>
             </p>
           </div>

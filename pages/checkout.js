@@ -1,66 +1,185 @@
+// "use client";
 import React from "react";
-import Link from "next/link";
+// import Link from "next/link";
+// import axios from "axios";
 import {
   AiFillPlusCircle,
   AiFillMinusCircle,
   AiFillCloseCircle,
 } from "react-icons/ai";
 import { BsFillBagCheckFill } from "react-icons/bs";
-import Head from "next/head";
-import Script from "next/head";
-const Checkout = ({
+// import Head from "next/head";
+// import Script from "next/head";
+// import Stripe from "stripe";
+// import { loadStripe } from "@stripe/stripe-js";
+
+// const stripePromise = loadStripe(
+//   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+// );
+const Checkout = async ({
   cart,
   addToCart,
   removeToCart,
   clearCart,
   subTotal,
   oid,
+
   email = "email",
 }) => {
-  const initiatePayment = async () => {
-    let oid = Math.floor(Math.random() * Date.now());
-    const data = { cart, subTotal };
-    //get the transaction token
-    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    let tnxToken = await a.json();
-    console.log(tnxToken);
-    var config = {
-      root: "",
-      flow: "DEFAULT",
-      data: {
-        orderId: oid /* update order id */,
-        token: tnxToken /* update token value */,
-        tokenType: "TXN_TOKEN",
-        amount: subTotal /* update amount */,
-      },
-      handler: {
-        notifyMerchant: function (eventName, data) {
-          console.log("notifyMerchant handler function called");
-          console.log("eventName => ", eventName);
-          console.log("data => ", data);
-        },
-      },
-    };
-    // initialze configuration using init
-    window.Paytm.CheckoutJS.init(config)
-      .then(function onSuccess() {
-        // after successfully updating configuration, invoke JS Checkout
-        window.Paytm.CheckoutJS.invoke();
-      })
-      .catch(function onError(error) {
-        console.log("error => ", error);
-      });
+  const handleCheckoutClick = () => {
+    const checkoutUrl = "https://buy.stripe.com/aEU6r14nO5z00soaEE";
+    window.location.href = checkoutUrl;
   };
+  // const [data, setData] = useState(null);
+  // const [error, setError] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  // const handleCheckoutClick = async () => {
+  //   setIsLoading(true);
+
+  //   try {
+  //     const response = await fetch("https://buy.stripe.com/aEU6r14nO5z00soaEE");
+  //     const result = await response.json();
+  //     setData(result);
+  //   } catch (err) {
+  //     setError(err);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // const [data, setData] = useState(null);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         "https://buy.stripe.com/aEU6r14nO5z00soaEE"
+  //       );
+  //       const result = await response.json();
+  //       setData(result);
+  //     } catch (err) {
+  //       setError(err);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []); // Run once on component mount
+
+  // if (error) {
+  //   return <div>Error: {error.message}</div>;
+  // }
+
+  // if (!data) {
+  //   return <div>Loading...</div>;
+  // }
+  // let stripePromise = null;
+  // let getstripe = async () => {
+  //   if (!stripePromise) {
+  //     stripePromise = loadStripe(
+  //       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  //     );
+  //   }
+  //   return stripePromise;
+  // };
+  // const stripe = await getstripe();
+  // await stripe.redirectToCheckout({
+  //   mode: "payment",
+  //   lineItems: "subTotal",
+  //   success_url: `${window.location.origin}?session_id={CHECKOUT_}`,
+  //   cancel_url: window.location.origin,
+  // });
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // const data ={ cart, subTotal};
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://localhost:3000/api/payment",
+  //       {
+  //         cart: cart,
+  //         priceId: subTotal,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     window.location.assign(data);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error(error.response.data);
+  //   }
+  // };
+  // const handleCheckout = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const stripe = await stripePromise;
+
+  //     const checkoutSession = await axios.post(
+  //       "http://localhost:3000/api/payment",
+  //       {
+  //         cart,
+  //       }
+  //     );
+
+  //     const result = await stripe.redirectToCheckout({
+  //       sessionId: checkoutSession.data.id,
+  //     });
+
+  //     if (result.error) {
+  //       alert(result.error.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // const initiatePayment = async () => {
+  //   let oid = Math.floor(Math.random() * Date.now());
+  //   const data = { cart, subTotal };
+  //   //get the transaction token
+  //   let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   });
+  //   let tnxToken = await a.json();
+  //   console.log(tnxToken);
+  //   var config = {
+  //     root: "",
+  //     flow: "DEFAULT",
+  //     data: {
+  //       orderId: oid /* update order id */,
+  //       token: tnxToken /* update token value */,
+  //       tokenType: "TXN_TOKEN",
+  //       amount: subTotal /* update amount */,
+  //     },
+  //     handler: {
+  //       notifyMerchant: function (eventName, data) {
+  //         console.log("notifyMerchant handler function called");
+  //         console.log("eventName => ", eventName);
+  //         console.log("data => ", data);
+  //       },
+  //     },
+  //   };
+  //   // initialze configuration using init
+  //   window.Paytm.CheckoutJS.init(config)
+  //     .then(function onSuccess() {
+  //       // after successfully updating configuration, invoke JS Checkout
+  //       window.Paytm.CheckoutJS.invoke();
+  //     })
+  //     .catch(function onError(error) {
+  //       console.log("error => ", error);
+  //     });
+  // };
+
   return (
     <>
       <div className="container m-auto sm:m-auto mx-8">
-        <Head>
+        {/* <Head>
           <meta
             name="viewport"
             content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"
@@ -71,7 +190,7 @@ const Checkout = ({
           crossorigin="anonymous"
           src={`${process.env.PAYTM_HOST}/merchantpgpui/checkoutjs/merchant/${process.env.PAYTM_MID}.js`}
           onLoad="onScriptLoad()"
-        />
+        /> */}
         <h1 className="font-bold text-center text-3xl my-8">Checkout</h1>
         <h2 className="font-bold text-xl">1.Delivery Details</h2>
         <div className="mx-auto flex my-2">
@@ -262,15 +381,21 @@ const Checkout = ({
           </div> */}
         </div>
         <div className="mx-8">
-          <Link>
-            <button
-              onClick={initiatePayment}
-              className="flex mt-2 text-white bg-blue-500 border-0 py-2 px-12 focus:outline-none hover:bg-blue-300 rounded text-sm"
-            >
-              <BsFillBagCheckFill className="m-2" />
-              Pay ₹{subTotal}
-            </button>
-          </Link>
+          {data.someProperty}
+          <button
+            // onClick={initiatePayment}
+            // onClick={handleSubmit}
+            //
+            onClick={handleCheckoutClick}
+            disabled={isLoading}
+            className="flex mt-2 text-white bg-blue-500 border-0 py-2 px-12 focus:outline-none hover:bg-blue-300 rounded text-sm"
+          >
+            <BsFillBagCheckFill className="m-2" />
+            Pay ₹{subTotal}
+          </button>
+          {isLoading && <p>Loading...</p>}
+          {error && <p>Error: {error.message}</p>}
+          {data && <div>{data.someProperty}</div>}
         </div>
       </div>
     </>

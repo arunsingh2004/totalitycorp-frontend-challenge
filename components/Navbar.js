@@ -9,12 +9,6 @@ import {
   AiFillPlusCircle,
   AiFillMinusCircle,
   AiFillCloseCircle,
-  AiFillPlusSquare,
-  AiFillMinusSquare,
-  AiFillShopping,
-  AiOutlineMinus,
-  AiOutlineMinusCircle,
-  AiOutlinePlusCircle,
 } from "react-icons/ai";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
@@ -22,7 +16,6 @@ import { MdAccountCircle } from "react-icons/md";
 const Navbar = ({
   logout,
   user,
-  key,
   cart,
   addToCart,
   removeToCart,
@@ -49,22 +42,23 @@ const Navbar = ({
     <div className="flex flex-col md:flex-row sticky top-0 bg-white z-10 justify-center md:justify-start items-center py-2 shadow-lg">
       <div className="logo mr-auto md:mx-5">
         <Link href={"/"}>
-          <Image src="/logo.png" width={100} height={40} alt="" />
+          {/* <Image src="/logo.png" width={100} height={40} alt="" /> */}
+          <p className="bold text-3xl text-blue-600 m-4">OneStop SOLUTION</p>
         </Link>
       </div>
       <div className="nav">
-        <ul className="flex items-center space-x-2 md:space-x-8 font-bold  md:text-md">
+        <ul className="flex items-center  space-x-5  md:space-x-8 font-bold  md:text-md">
           <Link href={"/tshirt"}>
-            <li>T-shirts</li>
+            <li className="hover:bg-blue-200 rounded-lg">Home Decor</li>
           </Link>
           <Link href={"/hoddies"}>
-            <li>Hoodies</li>
+            <li className="hover:bg-blue-200 rounded-lg">Repairs & Service</li>
           </Link>
           <Link href={"/stickers"}>
-            <li>Stickers</li>
+            <li className="hover:bg-blue-200 rounded-lg">Daily Needs</li>
           </Link>
           <Link href={"/mugs"}>
-            <li>Mugs</li>
+            <li className="hover:bg-blue-200 rounded-lg">Wedding Requisites</li>
           </Link>
           {/* <Link href={'/'}><li>T-shirts</li></Link> */}
         </ul>
