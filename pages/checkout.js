@@ -1,185 +1,191 @@
-// "use client";
 import React from "react";
-// import Link from "next/link";
-// import axios from "axios";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   AiFillPlusCircle,
   AiFillMinusCircle,
   AiFillCloseCircle,
 } from "react-icons/ai";
 import { BsFillBagCheckFill } from "react-icons/bs";
-// import Head from "next/head";
-// import Script from "next/head";
-// import Stripe from "stripe";
-// import { loadStripe } from "@stripe/stripe-js";
-
-// const stripePromise = loadStripe(
-//   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-// );
-const Checkout = async ({
+import Head from "next/head";
+import Script from "next/head";
+import { Imprima } from "next/font/google";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+const Checkout = ({
   cart,
   addToCart,
   removeToCart,
   clearCart,
   subTotal,
   oid,
-
-  email = "email",
+  // user,
 }) => {
-  const handleCheckoutClick = () => {
-    const checkoutUrl = "https://buy.stripe.com/aEU6r14nO5z00soaEE";
-    window.location.href = checkoutUrl;
-  };
-  // const [data, setData] = useState(null);
-  // const [error, setError] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // const handleCheckoutClick = async () => {
-  //   setIsLoading(true);
-
-  //   try {
-  //     const response = await fetch("https://buy.stripe.com/aEU6r14nO5z00soaEE");
-  //     const result = await response.json();
-  //     setData(result);
-  //   } catch (err) {
-  //     setError(err);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // const [data, setData] = useState(null);
-  // const [error, setError] = useState(null);
-
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [address, setAddress] = useState("");
+  const [disabled, setDisabled] = useState(true);
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [user, setuser] = useState({ value: null });
   // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "https://buy.stripe.com/aEU6r14nO5z00soaEE"
-  //       );
-  //       const result = await response.json();
-  //       setData(result);
-  //     } catch (err) {
-  //       setError(err);
-  //     }
-  //   };
+  //   const user = JSON.parse(localStorage.getItem("myuser"));
+  //   // if (user && user.token) {
+  //   //   setName(user.name);
+  //   //   setEmail(user.email);
+  //   // }
 
-  //   fetchData();
-  // }, []); // Run once on component mount
-
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
-
-  // if (!data) {
-  //   return <div>Loading...</div>;
-  // }
-  // let stripePromise = null;
-  // let getstripe = async () => {
-  //   if (!stripePromise) {
-  //     stripePromise = loadStripe(
-  //       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  //     );
+  //   if (user) {
+  //     setName(user.name);
+  //     setEmail(user.email);
   //   }
-  //   return stripePromise;
-  // };
-  // const stripe = await getstripe();
-  // await stripe.redirectToCheckout({
-  //   mode: "payment",
-  //   lineItems: "subTotal",
-  //   success_url: `${window.location.origin}?session_id={CHECKOUT_}`,
-  //   cancel_url: window.location.origin,
-  // });
+  // }, []);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("myuser"));
+    if (user) {
+      setuser({ value: user.token, email: user.email });
+    }
+    if (user.token) {
+      setuser(user);
+      setEmail(user.email);
+    }
+    console.log(setEmail);
+  }, []);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // const data ={ cart, subTotal};
-  //   try {
-  //     const { data } = await axios.post(
-  //       "http://localhost:3000/api/payment",
-  //       {
-  //         cart: cart,
-  //         priceId: subTotal,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     window.location.assign(data);
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.error(error.response.data);
-  //   }
-  // };
-  // const handleCheckout = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const stripe = await stripePromise;
+  useEffect(() => {
+    if (
+      name.length > 3 &&
+      email.length > 3 &&
+      phone.length > 3 &&
+      pincode.length > 3
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [name, email, phone, pincode, address]);
+  const handleChange = async (e) => {
+    if (e.target.name == "name") {
+      setName(e.target.value);
+    } else if (e.target.name == "email") {
+      setEmail(e.target.value);
+    } else if (e.target.name == "pincode") {
+      setPincode(e.target.value);
+      if (e.target.value.length == 6) {
+        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
+        let pinJson = await pins.json();
+        // console.log(pinJson);
+        if (Object.keys(pinJson).includes(e.target.value)) {
+          setCity(pinJson[e.target.value][0]);
+          setState(pinJson[e.target.value][1]);
+        }
+      } else {
+        setState("");
+        setCity("");
+      }
+    } else if (e.target.name == "phone") {
+      setPhone(e.target.value);
+    } else if (e.target.name == "address") {
+      setAddress(e.target.value);
+    }
+    setTimeout(() => {
+      if (
+        name.length > 3 &&
+        email.length > 3 &&
+        phone.length > 3 &&
+        address.length > 3 &&
+        pincode.length > 3
+      ) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+    }, 1000);
+  };
 
-  //     const checkoutSession = await axios.post(
-  //       "http://localhost:3000/api/payment",
-  //       {
-  //         cart,
-  //       }
-  //     );
+  const initiatePayment = async () => {
+    let oid = Math.floor(Math.random() * Date.now());
+    const data = {
+      cart,
+      subTotal,
+      oid,
+      email: email,
+      name,
+      pincode,
+      phone,
+      address,
+    };
+    //get the transaction token
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    let tnxRes = await a.json();
+    if (tnxRes.succes) {
+      console.log(tnxRes);
 
-  //     const result = await stripe.redirectToCheckout({
-  //       sessionId: checkoutSession.data.id,
-  //     });
-
-  //     if (result.error) {
-  //       alert(result.error.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // const initiatePayment = async () => {
-  //   let oid = Math.floor(Math.random() * Date.now());
-  //   const data = { cart, subTotal };
-  //   //get the transaction token
-  //   let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransaction`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   });
-  //   let tnxToken = await a.json();
-  //   console.log(tnxToken);
-  //   var config = {
-  //     root: "",
-  //     flow: "DEFAULT",
-  //     data: {
-  //       orderId: oid /* update order id */,
-  //       token: tnxToken /* update token value */,
-  //       tokenType: "TXN_TOKEN",
-  //       amount: subTotal /* update amount */,
-  //     },
-  //     handler: {
-  //       notifyMerchant: function (eventName, data) {
-  //         console.log("notifyMerchant handler function called");
-  //         console.log("eventName => ", eventName);
-  //         console.log("data => ", data);
-  //       },
-  //     },
-  //   };
-  //   // initialze configuration using init
-  //   window.Paytm.CheckoutJS.init(config)
-  //     .then(function onSuccess() {
-  //       // after successfully updating configuration, invoke JS Checkout
-  //       window.Paytm.CheckoutJS.invoke();
-  //     })
-  //     .catch(function onError(error) {
-  //       console.log("error => ", error);
-  //     });
-  // };
-
+      let tnxToken = tnxRes.tnxToken;
+      var config = {
+        root: "",
+        flow: "DEFAULT",
+        data: {
+          orderId: oid /* update order id */,
+          token: tnxToken /* update token value */,
+          tokenType: "TXN_TOKEN",
+          amount: subTotal /* update amount */,
+        },
+        handler: {
+          notifyMerchant: function (eventName, data) {
+            console.log("notifyMerchant handler function called");
+            console.log("eventName => ", eventName);
+            console.log("data => ", data);
+          },
+        },
+      };
+      // initialze configuration using init
+      window.Paytm.CheckoutJS.init(config)
+        .then(function onSuccess() {
+          // after successfully updating configuration, invoke JS Checkout
+          window.Paytm.CheckoutJS.invoke();
+        })
+        .catch(function onError(error) {
+          console.log("error => ", error);
+        });
+    } else {
+      // console.log(tnxRes.error);
+      // localStorage.removeItem("cart");
+      clearCart();
+      toast.error("Error", {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progrss: undefined,
+      });
+    }
+  };
   return (
     <>
       <div className="container m-auto sm:m-auto mx-8">
-        {/* <Head>
+        <ToastContainer
+          position="top-left"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Head>
           <meta
             name="viewport"
             content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"
@@ -188,9 +194,9 @@ const Checkout = async ({
         <Script
           type="application/javascript"
           crossorigin="anonymous"
-          src={`${process.env.PAYTM_HOST}/merchantpgpui/checkoutjs/merchant/${process.env.PAYTM_MID}.js`}
+          src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchant/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`}
           onLoad="onScriptLoad()"
-        /> */}
+        />
         <h1 className="font-bold text-center text-3xl my-8">Checkout</h1>
         <h2 className="font-bold text-xl">1.Delivery Details</h2>
         <div className="mx-auto flex my-2">
@@ -203,6 +209,8 @@ const Checkout = async ({
                 Name
               </label>
               <input
+                onChange={handleChange}
+                value={name}
                 type="text"
                 id="name"
                 name="name"
@@ -218,12 +226,25 @@ const Checkout = async ({
               >
                 Email
               </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
+              {user && user.value ? (
+                <input
+                  value={user.email}
+                  type="email"
+                  id="email"
+                  name="email"
+                  readOnly
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+              ) : (
+                <input
+                  onChange={handleChange}
+                  value={email}
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -238,6 +259,8 @@ const Checkout = async ({
             </label>
             <textarea
               name="address"
+              onChange={handleChange}
+              value={address}
               id="address"
               cols="30"
               rows="2"
@@ -257,6 +280,8 @@ const Checkout = async ({
               </label>
               <input
                 type="text"
+                onChange={handleChange}
+                value={phone}
                 id="phone"
                 name="phone"
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -265,13 +290,18 @@ const Checkout = async ({
           </div>
           <div className="px-2 w-1/2">
             <div className="relative mb-4">
-              <label htmlFor="city" className="leading-7 text-sm text-gray-600">
-                City
+              <label
+                htmlFor="pincode"
+                className="leading-7 text-sm text-gray-600"
+              >
+                Pincode
               </label>
               <input
-                type="city"
-                id="city"
-                name="city"
+                type="pincode"
+                onChange={handleChange}
+                value={pincode}
+                id="pincode"
+                name="pincode"
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
@@ -288,7 +318,9 @@ const Checkout = async ({
                 State
               </label>
               <input
+                onChange={handleChange}
                 type="state"
+                value={state}
                 id="state"
                 name="state"
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -297,16 +329,15 @@ const Checkout = async ({
           </div>
           <div className="px-2 w-1/2">
             <div className="relative mb-4">
-              <label
-                htmlFor="pincode"
-                className="leading-7 text-sm text-gray-600"
-              >
-                Pincode
+              <label htmlFor="city" className="leading-7 text-sm text-gray-600">
+                City
               </label>
               <input
-                type="pincode"
-                id="pincode"
-                name="pincode"
+                onChange={handleChange}
+                type="city"
+                value={city}
+                id="city"
+                name="city"
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
@@ -314,9 +345,9 @@ const Checkout = async ({
         </div>
 
         <h2 className="font-bold text-xl">2.Reviw Your Items</h2>
-        <div className=" bg-blue-100 sideCart  py-10 px-8 ">
+        <div className=" bg-pink-100 sideCart  py-10 px-8 ">
           <h2 className="font-bold text-xl text-center">Your Cart</h2>
-          <span className="absolute top-5 right-2 cursor-pointer text-2xl text-blue-500">
+          <span className="absolute top-5 right-2 cursor-pointer text-2xl text-blue-400">
             <AiFillCloseCircle />
           </span>
           <ol className="list-decimal  font-semibold">
@@ -342,7 +373,7 @@ const Checkout = async ({
                             cart[k].variant
                           );
                         }}
-                        className="cursor-pointer text-blue-500"
+                        className="cursor-pointer text-blue-400"
                       />
                       <span className="mx-2"> {cart[k].qty}</span>
                       <AiFillPlusCircle
@@ -356,7 +387,7 @@ const Checkout = async ({
                             cart[k].variant
                           );
                         }}
-                        className="cursor-pointer text-blue-500"
+                        className="cursor-pointer text-blue-400"
                       />
                     </div>
                   </div>
@@ -368,34 +399,29 @@ const Checkout = async ({
 
           {/* <div className="flex">
             <Link href={"/checkout"}>
-              <button className="flex mr-2 text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-300 rounded text-sm">
+              <button className="flex mr-2 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-300 rounded text-sm">
                 <BsFillBagCheckFill className="m-2" /> CheckOut
               </button>
             </Link>
             <button
               onClick={clearCart}
-              className="flex mr-2 text-white bg-blue-500 border-0 py-2 px-2 focus:outline-none hover:bg-blue-300 rounded text-sm"
+              className="flex mr-2 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-300 rounded text-sm"
             >
               Clear Cart
             </button>
           </div> */}
         </div>
         <div className="mx-8">
-          {data.someProperty}
-          <button
-            // onClick={initiatePayment}
-            // onClick={handleSubmit}
-            //
-            onClick={handleCheckoutClick}
-            disabled={isLoading}
-            className="flex mt-2 text-white bg-blue-500 border-0 py-2 px-12 focus:outline-none hover:bg-blue-300 rounded text-sm"
-          >
-            <BsFillBagCheckFill className="m-2" />
-            Pay ₹{subTotal}
-          </button>
-          {isLoading && <p>Loading...</p>}
-          {error && <p>Error: {error.message}</p>}
-          {data && <div>{data.someProperty}</div>}
+          <Link href={"/checkout"}>
+            <button
+              disabled={disabled}
+              onClick={initiatePayment}
+              className="disabled:bg-pink-300 flex mt-2 text-white bg-pink-500 border-0 py-2 px-12 focus:outline-none hover:bg-pink-300 rounded text-sm"
+            >
+              <BsFillBagCheckFill className="m-2" />
+              Pay ₹{subTotal}
+            </button>
+          </Link>
         </div>
       </div>
     </>

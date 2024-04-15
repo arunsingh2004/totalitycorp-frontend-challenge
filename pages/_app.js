@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
 import LoadingBar from "react-top-loading-bar";
+// import SessionProvider from "./SessionProvider";
 import Footer from "../components/Footer";
 export default function App({ Component, pageProps }) {
   const [cart, setCart] = useState({});
@@ -94,6 +95,7 @@ export default function App({ Component, pageProps }) {
   };
   return (
     <>
+      {/* <SessionProvider session={pageProps.session}> */}
       <LoadingBar
         color="red"
         progress={progress}
@@ -124,6 +126,7 @@ export default function App({ Component, pageProps }) {
         {...pageProps}
       />
       <Footer />
+      {/* </SessionProvider> */}
     </>
   );
 }
